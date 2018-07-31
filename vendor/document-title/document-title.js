@@ -71,8 +71,16 @@ routeProps[mergedActionPropertyName] = {
         }
       })
       .then(function(finalTitle) {
+        var router;
+
+        if (typeof getOwner === 'function') {
+          router = getOwner(self).lookup('router:main');
+        } else {
+          router = self.router;
+        }
+
         // Stubbable fn that sets document.title
-        self.router.setTitle(finalTitle);
+        router.setTitle(finalTitle);
       });
 
       // Tell FastBoot about our async code
